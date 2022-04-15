@@ -1,14 +1,35 @@
 server:
-  port: 8000
-
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
+  port: 9999
 spring:
   application:
-    name: gateway-service
- 
+    name: auth-gateway-svc
+  cloud:
+    gateway:
+      routes:
+        - id: authbackend
+          #uri: http://localhost:8081/
+          uri: lb://AUTHBACKEND
+          predicates:
+            - Path=/xmd-auth/**
+          # filters:
+          #   - AddRequestHeader=wordsearch-request, wordsearch-request-header
+          #   - AddResponseHeader=wordsearch-response, wordsearch-response-header
+          filters:
+            - CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: Spring Cloud Gateway Logging Filter
+                preLogger: true
+                postLogger: true  
+      default-filters:
+        - name: GlobalFilter  
+          args:
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.10.157:8761/eureka
