@@ -2,6 +2,8 @@ FROM appinair/jdk11-maven
 
 WORKDIR /auth-gateway-svc
 
+VOLUME /tmp 
+
 # CMD ["./auth-gateway-svc/gradlew", "clean", "build"]
 
 # ARG JAR_FILE=./auth-gateway-svc/build/libs/*.jar
