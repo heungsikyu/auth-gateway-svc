@@ -1,4 +1,4 @@
-FROM appinair/jdk11-maven
+FROM openjdk:11
 
 WORKDIR /auth-gateway-svc
 
@@ -12,7 +12,7 @@ COPY ./auth-gateway-svc/build/libs/gateway-service-0.0.1-SNAPSHOT.jar authagatew
 COPY ./opentelemetry_agent/opentelemetry-javaagent.jar  opentelemetry-javaagent.jar
 
 
-ENTRYPOINT ["java", "-javaagent:opentelemetry-javaagent.jar", "-Dotel.exporter.otlp.endpoint=http://192.168.10.157:4317", "-Dotel.resource.attributes=service.name=auth-gateway-svc", "-jar",  "authagatewayservice-0.0.1.jar" ]
+ENTRYPOINT ["java", "-javaagent:opentelemetry-javaagent.jar", "-Dotel.exporter.otlp.endpoint=http://192.168.10.214:4317", "-Dotel.resource.attributes=service.name=auth-gateway-svc", "-jar",  "authagatewayservice-0.0.1.jar" ]
 
 
 #  OTEL_EXPORTER_OTLP_ENDPOINT="http://127.0.0.1:4317" OTEL_RESOURCE_ATTRIBUTES=service.name=auth-gateway-svc 
